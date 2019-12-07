@@ -27,7 +27,7 @@ fn threaded_is_prime(num: u64, max: u64) -> bool {
         let max_thread = min(p * step, max);
         let num_thread = num;
         children.push(thread::spawn(move || {
-            return check_prime(min_thread, max_thread, num_thread);
+            check_prime(min_thread, max_thread, num_thread)
         }));
     }
     children.into_iter().all(|child| child.join().unwrap())
