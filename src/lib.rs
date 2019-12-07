@@ -1,7 +1,6 @@
 use std::cmp::min;
 use std::thread;
 static NUM_THREADS: u64 = 4;
-#[inline]
 pub fn is_prime(num: u64) -> bool {
     if num == 1 {
         return false;
@@ -13,14 +12,13 @@ pub fn is_prime(num: u64) -> bool {
         return false;
     }
     let max = integer_sqrt(num) / 6 + 1;
-    if num < 4196 {
+    if num < 65536 {
         return check_prime(1, max, num);
     } else {
         return threaded_is_prime(num, max);
     }
 }
 
-#[inline]
 fn threaded_is_prime(num: u64, max: u64) -> bool {
     let step = max / (NUM_THREADS);
     let mut children = vec![];
@@ -35,8 +33,7 @@ fn threaded_is_prime(num: u64, max: u64) -> bool {
     children.into_iter().all(|child| child.join().unwrap())
 }
 
-#[inline]
-fn check_prime(min: u64, max: u64, num: u64) -> bool {
+pub fn check_prime(min: u64, max: u64, num: u64) -> bool {
     for i in min..=max {
         if num % (6 * i - 1) == 0 || num % (6 * i + 1) == 0 {
             return false;
@@ -46,7 +43,6 @@ fn check_prime(min: u64, max: u64, num: u64) -> bool {
 }
 
 // Implement https://en.wikipedia.org/wiki/Integer_square_root#Using_bitwise_operations
-#[inline]
 fn integer_sqrt(num: u64) -> u64 {
     if num < 2 {
         return num;
