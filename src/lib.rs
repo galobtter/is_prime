@@ -14,7 +14,7 @@ pub fn is_prime(num: u64) -> bool {
 }
 
 fn threaded_is_prime(num: u64, max: u64) -> bool {
-    let step = max / (NUM_THREADS);
+    let step = max / (NUM_THREADS) + 1;
     let mut children = vec![];
     for p in 1..=NUM_THREADS {
         let min_thread = step * (p - 1) + 1;
