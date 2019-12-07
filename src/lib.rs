@@ -33,7 +33,7 @@ fn threaded_is_prime(num: u64, max: u64) -> bool {
     children.into_iter().all(|child| child.join().unwrap())
 }
 
-pub fn check_prime(min: u64, max: u64, num: u64) -> bool {
+fn check_prime(min: u64, max: u64, num: u64) -> bool {
     for i in min..=max {
         if num % (6 * i - 1) == 0 || num % (6 * i + 1) == 0 {
             return false;
