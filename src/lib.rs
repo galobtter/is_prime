@@ -2,13 +2,7 @@ use std::cmp::min;
 use std::thread;
 static NUM_THREADS: u64 = 4;
 pub fn is_prime(num: u64) -> bool {
-    if num == 1 {
-        return false;
-    }
-    if num % 2 == 0 && num != 2 {
-        return false;
-    }
-    if num % 3 == 0 && num != 3 {
+    if num == 1 || num % 2 == 0 && num != 2 || num % 3 == 0 && num != 3 {
         return false;
     }
     let max = integer_sqrt(num) / 6 + 1;
