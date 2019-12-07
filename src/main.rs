@@ -8,7 +8,7 @@ fn main() {
     io::stdin()
         .read_line(&mut num)
         .expect("Failed to read line");
-    let num: u128 = num
+    let num: u64 = num
         .trim()
         .parse()
         .expect("Input could not be parsed as a number.");

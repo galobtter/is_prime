@@ -1,8 +1,8 @@
 use std::cmp::min;
 use std::thread;
-static NUM_THREADS: u128 = 2;
+static NUM_THREADS: u64 = 4;
 #[inline]
-pub fn is_prime(num: u128) -> bool {
+pub fn is_prime(num: u64) -> bool {
     if num == 1 {
         return false;
     }
@@ -21,11 +21,11 @@ pub fn is_prime(num: u128) -> bool {
 }
 
 #[inline]
-fn threaded_is_prime(num: u128, max: u128) -> bool {
-    let step = max / (NUM_THREADS - 1);
+fn threaded_is_prime(num: u64, max: u64) -> bool {
+    let step = max / (NUM_THREADS);
     let mut children = vec![];
     for p in 1..=NUM_THREADS {
-        let min_thread = p * (step - 1) + 1;
+        let min_thread = step * (p - 1) + 1;
         let max_thread = min(p * step, max);
         let num_thread = num;
         children.push(thread::spawn(move || {
@@ -36,7 +36,7 @@ fn threaded_is_prime(num: u128, max: u128) -> bool {
 }
 
 #[inline]
-fn check_prime(min: u128, max: u128, num: u128) -> bool {
+fn check_prime(min: u64, max: u64, num: u64) -> bool {
     for i in min..=max {
         if num % (6 * i - 1) == 0 || num % (6 * i + 1) == 0 {
             return false;
@@ -47,7 +47,7 @@ fn check_prime(min: u128, max: u128, num: u128) -> bool {
 
 // Implement https://en.wikipedia.org/wiki/Integer_square_root#Using_bitwise_operations
 #[inline]
-fn integer_sqrt(num: u128) -> u128 {
+fn integer_sqrt(num: u64) -> u64 {
     if num < 2 {
         return num;
     } else {
