@@ -74,8 +74,7 @@ mod tests {
     #[test]
     fn correct_primality_threaded_check() {
         let mut rng = rand::thread_rng();
-        for p in 1..u16::pow(2, 16) {
-            println!("{}", p);
+        for _ in 1..u32::pow(2, 16) {
             let n: u32 = rng.gen();
             assert_eq!(
                 is_prime_internal(n as u64, true),
