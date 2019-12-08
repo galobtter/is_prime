@@ -1,6 +1,6 @@
 use std::cmp::min;
 use std::thread;
-static NUM_THREADS: u64 = 4;
+const NUM_THREADS: u64 = 4;
 pub fn is_prime(num: u64) -> bool {
     is_prime_internal(num, false)
 }
