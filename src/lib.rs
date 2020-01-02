@@ -22,7 +22,7 @@ fn is_prime_internal(num: u64, no_threads: bool) -> bool {
 fn threaded_is_prime(num: u64, max: u64) -> bool {
     let step = max / (NUM_THREADS) + 1;
     let mut children = vec![];
-    for p in 1..=NUM_THREADS {
+    for p in 1..(NUM_THREADS + 1) {
         let min_thread = step * (p - 1) + 1;
         let max_thread = min(p * step, max);
         let num_thread = num;
@@ -34,12 +34,7 @@ fn threaded_is_prime(num: u64, max: u64) -> bool {
 }
 
 fn check_prime(min: u64, max: u64, num: u64) -> bool {
-    for i in min..=max {
-        if num % (6 * i - 1) == 0 || num % (6 * i + 1) == 0 {
-            return false;
-        }
-    }
-    true
+    { min..=max }.all(|i| num % (6 * i - 1) != 0 && num % (6 * i + 1) != 0)
 }
 
 // Implement https://en.wikipedia.org/wiki/Integer_square_root#Using_bitwise_operations
